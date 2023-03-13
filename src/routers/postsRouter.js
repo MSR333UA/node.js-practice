@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = new express.Router();
 
 const {
@@ -7,17 +7,19 @@ const {
   addPost,
   changePost,
   deletePost,
-} = require('../controllers/postsController');
+} = require("../controllers/postsController");
+const modelsMiddleware = require("../middlewares/models");
 const {
   addPostValidation,
-  patchPostValidation,
-} = require('../middlewares/validationMiddlewares');
+  // patchPostValidation,
+} = require("../middlewares/validationMiddlewares");
 
-router.get('/', getPost);
-router.get('/:id', getPostById);
-router.post('/', addPostValidation, addPost);
-router.put('/:id', addPostValidation, changePost);
-router.put('/:id', patchPostValidation);
-router.delete('/:id', deletePost);
+router.use(modelsMiddleware);
+router.get("/", getPost);
+router.get("/:id", getPostById);
+router.post("/", addPostValidation, addPost);
+router.put("/:id", addPostValidation, changePost);
+// router.put("/:id", patchPostValidation);
+router.delete("/:id", deletePost);
 
-module.exports = {routerRouter: router};
+module.exports = { routerRouter: router };
