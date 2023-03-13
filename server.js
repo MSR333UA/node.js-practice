@@ -20,14 +20,17 @@ app.use((error, req, res, next) => {
 });
 
 const start = async () => {
-  await connectMongo();
+  try {
+    await connectMongo();
 
-  app.listen(PORT, (err) => {
-    if (err) {
-      console.error('error', err);
-    }
-    console.log(`server works at port ${PORT}!`);
-  });
+    app.listen(PORT, (err) => {
+      if (err) console.error('error', err);
+      console.log(`server works at port ${PORT}!`);
+    });
+  } catch (error) {
+    console.error(`Failed to lunch application with error ${error.message}`);
+  }
 };
+
 start();
 // module.exports = app;
