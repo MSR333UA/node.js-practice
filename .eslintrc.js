@@ -9,5 +9,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
   },
-  rules: {},
+  rules: {
+    'comma-dangle': 'off',
+    'require-jsdoc': 'off',
+  },
 };
