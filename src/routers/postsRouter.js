@@ -9,13 +9,11 @@ const {
   deletePost,
 } = require('../controllers/postsController');
 const {asyncWrapper} = require('../helpers/apiHelpers');
-const modelsMiddleware = require('../middlewares/models');
 const {
   addPostValidation,
   // patchPostValidation,
 } = require('../middlewares/validationMiddlewares');
 
-router.use(modelsMiddleware);
 router.get('/', asyncWrapper(getPost));
 router.get('/:id', asyncWrapper(getPostById));
 router.post('/', addPostValidation, asyncWrapper(addPost));
