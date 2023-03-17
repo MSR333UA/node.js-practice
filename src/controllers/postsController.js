@@ -8,14 +8,18 @@ const {
 
 // GET/api/posts => [...posts]
 const getPostsController = async (req, res) => {
-  const posts = await getPosts();
+  const {_id: userId} = req.user;
+
+  const posts = await getPosts(userId);
   res.json({posts, status: 'success'});
 };
 
 // GET/api/posts => {post with id 123}
 const getPostByIdController = async (req, res) => {
-  const {id} = req.params;
-  const post = await getPostById(id);
+  const {id: postId} = req.params;
+  const {_id: userId} = req.user;
+
+  const post = await getPostById(postId, userId);
 
   res.json({post, status: 'success'});
 };
@@ -23,7 +27,9 @@ const getPostByIdController = async (req, res) => {
 // POST/api/posts/<123> => [newPost, ...posts]
 const addPostController = async (req, res) => {
   const {topic, text} = req.body;
-  await addPost({topic, text});
+  const {_id: userId} = req.user;
+
+  await addPost({topic, text}, userId);
 
   res.json({status: 'success'});
 };
@@ -31,9 +37,10 @@ const addPostController = async (req, res) => {
 // PUT/api/posts/<123> => [changedPost, ...posts]
 const changePostController = async (req, res) => {
   const {topic, text} = req.body;
-  const {id} = req.params;
+  const {id: postId} = req.params;
+  const {_id: userId} = req.user;
 
-  await changePostById(id, {topic, text});
+  await changePostById(postId, {topic, text}, userId);
   res.json({status: 'success'});
 };
 
@@ -51,8 +58,10 @@ const changePostController = async (req, res) => {
 
 // DELETE/api/posts/<123> => {delete with id 123}
 const deletePostController = async (req, res) => {
-  const {id} = req.params;
-  await deletePostById(id);
+  const {id: postId} = req.params;
+  const {_id: userId} = req.user;
+
+  await deletePostById(postId, userId);
   res.json({status: 'success'});
 };
 

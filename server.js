@@ -1,21 +1,23 @@
 const express = require('express');
 const morgan = require('morgan');
+require('dotenv').config();
+
 const {connectMongo} = require('./src/db/connections');
 const {errorHandler} = require('./src/helpers/apiHelpers');
+const {authRouter} = require('./src/routers/authRouter');
+const {postRouter} = require('./src/routers/postsRouter');
 
-const {routerRouter} = require('./src/routers/postsRouter');
-require('dotenv').config();
 // const cors = require("cors");
 const app = express();
 
-const PORT = 8081;
+const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.static("public"));
 app.use(morgan('tiny'));
 // app.use(cors());
-app.use('/api/posts', routerRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/posts', postRouter);
+
 app.use(errorHandler);
 
 const start = async () => {
