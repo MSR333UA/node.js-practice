@@ -9,9 +9,11 @@ const {
 // GET/api/posts => [...posts]
 const getPostsController = async (req, res) => {
   const {_id: userId} = req.user;
-
-  const posts = await getPosts(userId);
-  res.json({posts, status: 'success'});
+  let {skip = 0, limit = 5} = req.query;
+  limit = parseInt(limit) > 10 ? 10 : parseInt(limit);
+  skip = parseInt(skip);
+  const posts = await getPosts(userId, {skip, limit});
+  res.json({posts, skip, limit, status: 'success'});
 };
 
 // GET/api/posts => {post with id 123}

@@ -12,5 +12,6 @@ module.exports = {
   rules: {
     'comma-dangle': 'off',
     'require-jsdoc': 'off',
+    'max-len': 'off',
   },
 };
