@@ -5,6 +5,7 @@ require('dotenv').config();
 const {connectMongo} = require('./src/db/connections');
 const {errorHandler} = require('./src/helpers/apiHelpers');
 const {authRouter} = require('./src/routers/authRouter');
+const {fileRouter} = require('./src/routers/filesRouter');
 const {postRouter} = require('./src/routers/postsRouter');
 
 // const cors = require("cors");
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(morgan('tiny'));
 // app.use(cors());
 app.use('/api/auth', authRouter);
+app.use('/api/files', fileRouter);
 app.use('/api/posts', postRouter);
 
 app.use(errorHandler);
